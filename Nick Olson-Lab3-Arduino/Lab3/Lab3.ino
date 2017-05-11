@@ -1,5 +1,7 @@
+//#include <usb_serial.h>
 #include <Adafruit_CircuitPlayground.h>
 //#include <Adafruit_NeoPixel.h>
+
 
 typedef void (*callback_function)(void);
 
@@ -80,7 +82,7 @@ void setup() {
   // put your setup code here, to run once:
   CircuitPlayground.begin();
   Serial.begin(9600);
-  Interval=125;
+  Interval=50;
   lastUpdate=0;
   pixelFlash=true;
   Pattern=NONE;
@@ -92,11 +94,12 @@ void setup() {
   colors[5]=Magenta;
   colors[6]=White;
   colors[7]=Black;
-  
+  //Serial.println("Hello");
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
+  //Serial.print("Hello");
   Update(doUsb);//doSerial);
   checkPattern();
   readUsb();
@@ -128,17 +131,25 @@ color Color(uint32_t c)
 
 void readUsb()
 {
-  byte buffer[65];
-  uint8_t bytesRecieved = RawHID.recv(buffer,0);
+  byte bytebuffer[65];
+  uint8_t bytesRecieved = RawHID.recv(bytebuffer,0);
   if(bytesRecieved>0)
   {
-    byte packet[64];
+    //usb_serial_putchar(buffer[0]);
+    Serial.print(bytebuffer[0]);
+    /*byte packet[64];
     for (int i=0;i<64;i++)
     {
-      packet[i]=buffer[i+1];
-    }
-    byte command = packet[0];
-    readPacket(command,packet);
+      packet[i]=buffer[i];
+    }*/
+      /*for (int i=0;i<10;i++)
+        ClearPixel(i);
+      pixelFlash=true;
+      Pattern=FLASH;
+      PatternLastUpdate=0;
+      colorCounter=0;*/
+    byte command = bytebuffer[0];
+    readPacket(command,bytebuffer);
   }
 }
 void readSerial()
