@@ -37,6 +37,7 @@ namespace CircuitPlaygroundGUI
             RightButton = model.ReadRightButton;
             SlideSwitch = model.ReadSlideSwitch;
             IsHeld = model.IsBeingHeld();
+            USB = model.ReadUsb;
         }
         private float accelX;
 
@@ -108,6 +109,13 @@ namespace CircuitPlaygroundGUI
         {
             get { return slideSwitch; }
             set { slideSwitch = value; NotifyPropertyChanged(); }
+        }
+
+        private bool usb;
+        public bool USB
+        {
+            get { return usb; }
+            set { usb = value; model.SetUsb(value); NotifyPropertyChanged(); }
         }
 
         public List<string> Devices { get { return model.GetDevices().ToList(); } }

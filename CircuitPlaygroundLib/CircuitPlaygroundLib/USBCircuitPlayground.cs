@@ -28,6 +28,7 @@ namespace CircuitPlaygroundLib
         private bool rightButton;
         private bool slideSwitch;
         private bool save = true;
+        private bool usb = true;
 
         public bool IsOpen
         {
@@ -44,7 +45,7 @@ namespace CircuitPlaygroundLib
                 return accelData;
             }
         }
-
+        
         public float ReadTempC
         {
             get
@@ -107,6 +108,19 @@ namespace CircuitPlaygroundLib
             {
                 return IsBeingHeld();
             }
+        }
+
+        public bool ReadUsb
+        {
+            get
+            {
+                return usb;
+            }
+        }
+
+        public void SetUsb(bool state)
+        {
+                usb = state;
         }
 
         public event EventHandler<EventArgs> DataReceived;
